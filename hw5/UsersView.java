@@ -2,8 +2,9 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
-
+import javafx.event.*;
 import javafx.collections.*;
+
 import java.util.*;
 
 public class UsersView {
@@ -13,32 +14,25 @@ public class UsersView {
     private Label emailLabel;
     private TextField emailInput;
     private Label positionLabel;
-    private ComboBox positionInput;
+    private ComboBox<Position> positionInput;
     private TextArea output;
     private HBox buttonBox;
     private Button submitButton;
 
     public UsersView() {
-        // TODO: add components to the grid pane
         this.gridPane = new GridPane();
         this.nameLabel = new Label("Name:");
         this.nameInput = new TextField();
         this.emailLabel = new Label("Email:");
         this.emailInput = new TextField();
         this.positionLabel = new Label("Positions:");
-        List<String> options = new ArrayList<>();
-        for (Position pos : Position.values()) {
-            options.add(pos.toString());
-        }
-        this.positionInput = new ComboBox();
-        this.positionInput.getItems().addAll(options);
+        this.positionInput = new ComboBox(FXCollections.observableArrayList(Position.values()));
         this.output = new TextArea();
         this.submitButton = new Button("Submit");
         this.buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(submitButton);
 
-        // gridPane.setStyle("-fx-background-color: #aa0000;");
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -55,5 +49,25 @@ public class UsersView {
 
     public Parent getRoot() {
         return this.gridPane;
+    }
+
+    public String getNameInputText() {
+        return nameInput.getText();
+    }
+
+    public String getEmailInputText() {
+        return emailInput.getText();
+    }
+
+    public Position getPositionInputValue() {
+        return positionInput.getValue();
+    }
+
+    public void setOutput(String text) {
+        output.setText(text);
+    }
+
+    public void setOnAction(EventHandler<ActionEvent> handler) {
+        submitButton.setOnAction(handler);
     }
 }
