@@ -11,6 +11,7 @@ public class CreateUsersFX extends Application {
         Scene scene = new Scene(view.getRoot(), 640, 480);
         stage.setScene(scene);
         stage.show();
+        // test code
     }
 
     public static void main(String[] args) {
