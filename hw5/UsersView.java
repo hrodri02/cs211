@@ -2,8 +2,9 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
-
+import javafx.event.*;
 import javafx.collections.*;
+
 import java.util.*;
 
 public class UsersView {
@@ -13,32 +14,29 @@ public class UsersView {
     private Label emailLabel;
     private TextField emailInput;
     private Label positionLabel;
-    private ComboBox positionInput;
+    private ComboBox<Position> positionInput;
     private TextArea output;
     private HBox buttonBox;
     private Button submitButton;
+    private Button sortButton;
 
     public UsersView() {
-        // TODO: add components to the grid pane
-        this.gridPane = new GridPane();
-        this.nameLabel = new Label("Name:");
-        this.nameInput = new TextField();
-        this.emailLabel = new Label("Email:");
-        this.emailInput = new TextField();
-        this.positionLabel = new Label("Positions:");
-        List<String> options = new ArrayList<>();
-        for (Position pos : Position.values()) {
-            options.add(pos.toString());
-        }
-        this.positionInput = new ComboBox();
-        this.positionInput.getItems().addAll(options);
-        this.output = new TextArea();
-        this.submitButton = new Button("Submit");
-        this.buttonBox = new HBox();
+        gridPane = new GridPane();
+        nameLabel = new Label("Name:");
+        nameInput = new TextField();
+        emailLabel = new Label("Email:");
+        emailInput = new TextField();
+        positionLabel = new Label("Positions:");
+        positionInput = new ComboBox(FXCollections.observableArrayList(Position.values()));
+        output = new TextArea();
+        submitButton = new Button("Submit");
+        sortButton = new Button("Sort by name then email");
+        buttonBox = new HBox();
+        buttonBox.setSpacing(10);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(submitButton);
+        buttonBox.getChildren().add(sortButton);
 
-        // gridPane.setStyle("-fx-background-color: #aa0000;");
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -55,5 +53,35 @@ public class UsersView {
 
     public Parent getRoot() {
         return this.gridPane;
+    }
+
+    public String getNameInputText() {
+        return nameInput.getText();
+    }
+
+    public String getEmailInputText() {
+        return emailInput.getText();
+    }
+
+    public Position getPositionInputValue() {
+        return positionInput.getValue();
+    }
+
+    public void setOutput(String text) {
+        output.setText(text);
+    }
+
+    public void setSubmitButtonHandler(EventHandler<ActionEvent> handler) {
+        submitButton.setOnAction(handler);
+    }
+
+    public void setSortButtonHandler(EventHandler<ActionEvent> handler) {
+        sortButton.setOnAction(handler);
+    }
+
+    public void clearForm() {
+        nameInput.clear();
+        emailInput.clear();
+        positionInput.setValue(null);
     }
 }
