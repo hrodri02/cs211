@@ -1,17 +1,30 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.event.*;
 
-public class CalculatorController implements EventHandler {
+public class CalculatorController extends Application {
     private CalculatorView view;
     private CalculatorModel model;
 
-    public CalculatorController(CalculatorView view, CalculatorModel model) {
-        this.view = view;
-        this.model = model;
-        this.view.setButtonsHandler(this);
+    public CalculatorController() {
+        this.view = new CalculatorView();
+        this.model = new CalculatorModel();
+        this.view.setButtonsHandler(this::buttonHandler);
     }
 
     @Override
-    public void handle(Event event) {
+    public void start(Stage stage) {
+        CalculatorController controller = new CalculatorController();
+        Scene scene = new Scene(controller.view.getRoot(), 640, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public static void main(String[] args) {
+        launch();
+    }
+
+    public void buttonHandler(ActionEvent event) {
         Object src = event.getSource();
         String operator = model.getOperator();
 

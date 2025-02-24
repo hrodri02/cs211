@@ -3,8 +3,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 import javafx.event.*;
-
-import java.beans.EventHandler;
 import java.util.*;
 
 public class CalculatorView extends Parent 
@@ -18,7 +16,6 @@ public class CalculatorView extends Parent
         this.gridPane = new GridPane();
         buttons = new ArrayList<>();
 
-        gridPane.setStyle("-fx-background-color: #aa0000;");
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -60,12 +57,6 @@ public class CalculatorView extends Parent
         return this.gridPane;
     }
 
-    public void setButtonsHandler(CalculatorController handler) {
-        for (Button button : buttons) {
-            button.setOnAction(handler);
-        }
-    }
-
     public String getButtonText(Object src) {
         Button b = (Button) src;
         return b.getText();
@@ -85,5 +76,11 @@ public class CalculatorView extends Parent
 
     public Button getButtonAtIndex(int index) {
         return buttons.get(index);
+    }
+
+    public void setButtonsHandler(EventHandler<ActionEvent> handler) {
+        for (Button button : buttons) {
+            button.setOnAction(handler);
+        }
     }
 }
