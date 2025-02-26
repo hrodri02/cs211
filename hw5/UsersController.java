@@ -52,6 +52,7 @@ public class UsersController extends Application {
 
             Player newPlayer = new Player(name, email, position);
             model.addPerson(newPlayer);
+            model.sortUsersByName();
 
             String playerList = "";
             for (Person person : model.getUsers()) {
@@ -72,7 +73,14 @@ public class UsersController extends Application {
     }
 
     private void sortButtonHandler(ActionEvent event) {
+        model.sortUsersByNameThenEmail();
 
+        String sortedPlayerList = "";
+        for (Person person : model.getUsers()) {
+            sortedPlayerList += person.getName() + "\n";
+        }
+
+        view.setOutput(sortedPlayerList);
     }
 
 }
