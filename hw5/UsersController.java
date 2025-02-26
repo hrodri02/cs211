@@ -1,8 +1,28 @@
-public class UsersController {
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class UsersController extends Application {
     private UsersView view;
     private UsersModel model;
-    public UsersController(UsersView view, UsersModel model) {
-        this.view = view;
-        this.model = model;
+
+    public UsersController() {
+        this.view = new UsersView();
+        this.model = new UsersModel();
     }    
+
+    @Override
+    public void start(Stage stage) {
+        UsersView view = new UsersView();
+        UsersModel model = new UsersModel();
+        UsersController controller = new UsersController();
+        Scene scene = new Scene(view.getRoot(), 640, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }
