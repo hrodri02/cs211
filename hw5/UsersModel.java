@@ -15,6 +15,10 @@ public class UsersModel {
         return people;
     }
 
+    public void addPerson(Person person) {
+        people.add(person);
+    }
+
     public Position[] getPositions() {
         return Position.values();
     }
