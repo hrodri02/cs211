@@ -13,9 +13,6 @@ public class UsersController extends Application {
 
     @Override
     public void start(Stage stage) {
-        UsersView view = new UsersView();
-        UsersModel model = new UsersModel();
-        UsersController controller = new UsersController();
         Scene scene = new Scene(view.getRoot(), 640, 480);
         stage.setScene(scene);
         stage.show();
