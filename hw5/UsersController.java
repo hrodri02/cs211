@@ -53,13 +53,7 @@ public class UsersController extends Application {
             Player newPlayer = new Player(name, email, position);
             model.addPerson(newPlayer);
             model.sortUsersByName();
-
-            String playerList = "";
-            for (Person person : model.getUsers()) {
-                playerList += person.getName() + "\n";
-            }
-
-            view.setOutput(playerList);
+            view.setOutput(model.getUsers().toString());
                     
         } catch (IllegalArgumentException ex) {
             Alert error = new Alert(Alert.AlertType.ERROR);
@@ -74,13 +68,7 @@ public class UsersController extends Application {
 
     private void sortButtonHandler(ActionEvent event) {
         model.sortUsersByNameThenEmail();
-
-        String sortedPlayerList = "";
-        for (Person person : model.getUsers()) {
-            sortedPlayerList += person.getName() + "\n";
-        }
-
-        view.setOutput(sortedPlayerList);
+        view.setOutput(model.getUsers().toString());
     }
 
 }
