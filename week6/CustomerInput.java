@@ -48,6 +48,7 @@ public class CustomerInput extends Application {
         statusText = new Text("");
         statusText.setVisible(false);
         statusText.setFont(RESULT_FONT);
+        statusText.setWrappingWidth(475);
         statusText.setFill(Color.RED);
         resultText = new Text("");
         resultText.setVisible(false);
