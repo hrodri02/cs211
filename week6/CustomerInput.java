@@ -99,36 +99,39 @@ public class CustomerInput extends Application {
             showResultsOfFileUpload();
         }
         catch (NumberFormatException ex) {
-            statusText.setVisible(true);
-            statusText.setText("Error: " + token + " is not an integer.");    
+            setStatusText("Error: " + token + " is not an integer.");    
         }
         catch (InvalidCharacterException ex) {
-            statusText.setVisible(true);
-            statusText.setText(ex.getMessage());
+            setStatusText(ex.getMessage());
         }
         catch (NullPointerException ex) {
-            statusText.setVisible(true);
-            statusText.setText("Error: No file was selected.");
+            setStatusText("Error: No file was selected.");
         }
         catch (IOException ex) {
-            statusText.setVisible(true);
-            System.out.println(ex.getMessage());
-            statusText.setText("Error: " + ex.getMessage());
+            setStatusText("Error: " + ex.getMessage());
         }
     }
 
     public void showResultsOfFileUpload() {
-        statusText.setVisible(true);
-        statusText.setText("Success: " + customers.size()  + " customers were created.");
+        setStatusText("Success: " + customers.size()  + " customers were created.");
 
         int totalNumOrders = 0;
         for (Customer c : customers) {
             totalNumOrders += c.getNumberOfOrders();
         }
 
-        resultText.setVisible(true);
-        resultText.setText("Total Number of Orders: " + totalNumOrders);
+        setResultText("Total Number of Orders: " + totalNumOrders);
         uploadButton.setDisable(true);
+    }
+
+    private void setStatusText(String text) {
+        statusText.setVisible(true);
+        statusText.setText(text);
+    }
+
+    private void setResultText(String text) {
+        resultText.setVisible(true);
+        resultText.setText(text);
     }
 
     public static void main(String[] args) {
