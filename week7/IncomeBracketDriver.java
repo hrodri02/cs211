@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class IncomeDataInput {
     public static void main(String[] args) {
-        File file = new File("finc02_1_1.csv");
+        File file = new File("finc02_1_1_clean.csv");
         List<IncomeBracket> incomeBracketsByAge = new ArrayList<>();
         Map<String, List<IncomeBracket>> rangesToIncomeBrackets = new HashMap<>();
         readIncomeData(file, incomeBracketsByAge, rangesToIncomeBrackets);
@@ -61,17 +61,14 @@ public class IncomeDataInput {
                                     Map<String, List<IncomeBracket>> rangesToIncomeBrackets) 
     {
         try (Scanner fileScan = new Scanner(new FileReader(file))) {
-            // skip the first 13 lines
-            skipLines(fileScan, 13);
-
-            for (int i = 0; i < 41; i++) {
+            int i = 0;
+            while (fileScan.hasNext()) {
                 List<Integer> numByAgeGroup = new ArrayList<>();
                 String line = fileScan.nextLine();
                 
                 Scanner lineScan = new Scanner(line);
                 lineScan.useDelimiter(",");
 
-                skipColumns(lineScan, 3);
                 String token = lineScan.next();
                 int num15to24 = Integer.parseInt(token);
                 numByAgeGroup.add(num15to24);
@@ -80,27 +77,22 @@ public class IncomeDataInput {
                 int num25to34 = Integer.parseInt(token);
                 numByAgeGroup.add(num25to34);
                 
-                skipColumns(lineScan, 2);
                 token = lineScan.next();
                 int num35to44 = Integer.parseInt(token);
                 numByAgeGroup.add(num35to44);
 
-                skipColumns(lineScan, 2);
                 token = lineScan.next();
                 int num45to54 = Integer.parseInt(token);
                 numByAgeGroup.add(num45to54);
 
-                skipColumns(lineScan, 2);
                 token = lineScan.next();
                 int num55to64 = Integer.parseInt(token);
                 numByAgeGroup.add(num55to64);
 
-                skipColumns(lineScan, 3);
                 token = lineScan.next();
                 int num65to74 = Integer.parseInt(token);
                 numByAgeGroup.add(num65to74);
 
-                skipColumns(lineScan, 2);
                 token = lineScan.next();
                 int num75AndOver = Integer.parseInt(token);
                 numByAgeGroup.add(num75AndOver);
@@ -171,6 +163,8 @@ public class IncomeDataInput {
                         rangesToIncomeBrackets.put("$200,000 and over", brackets);
                     }
                 }
+
+                i++;
             }
         }
         catch (IOException ex) {
