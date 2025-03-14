@@ -171,14 +171,4 @@ public class IncomeBracketDriver {
             System.err.println(ex.getMessage());
         }
     }
-
-    private static void skipLines(Scanner scanner, int numLines) {
-        for (int i = 0; i < numLines; i++)
-            scanner.nextLine();
-    }
-
-    private static void skipColumns(Scanner scanner, int numCols) {
-        for (int i = 0; i < numCols; i++)
-            scanner.next();
-    }
 }
