@@ -6,13 +6,13 @@ public class IncomeBracket {
     private Integer min;
     private Integer max;
     private String range;
-	private List<Integer> ageGroups;
+	private List<Integer> numOfFamiliesInAgeGroups;
     
     private IncomeBracket(Builder builder) {
         this.min = builder.min;
         this.max = builder.max;
 		this.range = builder.range;
-		this.ageGroups = builder.ageGroups;
+		this.numOfFamiliesInAgeGroups = builder.numOfFamiliesInAgeGroups;
 	}
 
     public Integer getMin() {
@@ -27,8 +27,16 @@ public class IncomeBracket {
         return this.range;
     }
 
-    public List<Integer> getAgeGroups() {
-        return this.ageGroups;
+    public List<Integer> getNumOfFamiliesInAgeGroups() {
+        return this.numOfFamiliesInAgeGroups;
+    }
+
+    public Integer getTotalNumOfFamilies() {
+        Integer total = 0;
+        for (Integer familiesInAgeGroup : numOfFamiliesInAgeGroups) {
+            total += familiesInAgeGroup;
+        }
+        return total;
     }
 
     public void setMin(Integer min) {
@@ -43,16 +51,13 @@ public class IncomeBracket {
         this.range = range;
     }
 
-    public void setAgeGroups(List<Integer> ageGroups) {
-        this.ageGroups = ageGroups;
+    public void setNumOfFamiliesInAgeGroups(List<Integer> numOfFamiliesInAgeGroups) {
+        this.numOfFamiliesInAgeGroups = numOfFamiliesInAgeGroups;
     }
 
     @Override
 	public String toString() {
-        int total = 0;
-        for (Integer numOfFamiliesInAgeGroup: ageGroups) {
-            total += numOfFamiliesInAgeGroup;
-        }
+        int total = getTotalNumOfFamilies();
 		return "range =" + range + "\tnumber of families =" + total + "\n";
 	}
 
@@ -62,19 +67,19 @@ public class IncomeBracket {
         else if (obj == null) return false;
         return (obj instanceof IncomeBracket incomeBracket) &&
             this.range.equals(incomeBracket.getRange()) &&
-            this.ageGroups.equals(incomeBracket.getAgeGroups());
+            this.numOfFamiliesInAgeGroups.equals(incomeBracket.getNumOfFamiliesInAgeGroups());
     }
 
     public static class AgeGroupsComparator implements Comparator<IncomeBracket> {
         @Override
         public int compare(IncomeBracket bracket1, IncomeBracket bracket2) {
             Integer numFamiliesInFirstBracket = 0;
-            for (Integer numOfFamiliesInAgeGroup : bracket1.ageGroups) {
+            for (Integer numOfFamiliesInAgeGroup : bracket1.numOfFamiliesInAgeGroups) {
                 numFamiliesInFirstBracket += numOfFamiliesInAgeGroup;
             }
 
             Integer numFamiliesInSecondBracket = 0;
-            for (Integer numOfFamiliesInAgeGroup : bracket2.ageGroups) {
+            for (Integer numOfFamiliesInAgeGroup : bracket2.numOfFamiliesInAgeGroups) {
                 numFamiliesInSecondBracket += numOfFamiliesInAgeGroup;
             }
 
@@ -86,7 +91,7 @@ public class IncomeBracket {
         private Integer min;
         private Integer max;
 		private String range;
-		private List<Integer> ageGroups;
+		private List<Integer> numOfFamiliesInAgeGroups;
 
 		public Builder() { 	}
 
@@ -105,14 +110,14 @@ public class IncomeBracket {
 			return this;
 		}
 
-		public Builder ageGroups(List<Integer> value) {
-			ageGroups = value;
+		public Builder numOfFamiliesInAgeGroups(List<Integer> value) {
+			numOfFamiliesInAgeGroups = value;
 			return this;
 		}
 
 		public IncomeBracket build() {
 			IncomeBracket incomeBracket = new IncomeBracket(this);
-			if (min == null || max == null || range == null || ageGroups == null) {
+			if (min == null || max == null || range == null || numOfFamiliesInAgeGroups == null) {
 				throw new IllegalStateException("All information about a IncomeBracket must be specified.");
 			}
 			return incomeBracket;

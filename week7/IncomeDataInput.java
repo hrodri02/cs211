@@ -3,14 +3,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class IncomeDataInput {
     public static void main(String[] args) {
         File file = new File("finc02_1_1.csv");
         List<IncomeBracket> incomeBracketsByAge = new ArrayList<>();
-        readIncomeData(file, incomeBracketsByAge);
+        Map<String, List<IncomeBracket>> rangesToIncomeBrackets = new HashMap<>();
+        readIncomeData(file, incomeBracketsByAge, rangesToIncomeBrackets);
         Collections.sort(incomeBracketsByAge, new IncomeBracket.AgeGroupsComparator());
         // Q1: What are the income brackets sorted by the number of families in each bracket?
         System.out.println(incomeBracketsByAge);
@@ -22,7 +25,7 @@ public class IncomeDataInput {
             for (int i = 0; i < incomeBracketsByAge.size(); i++) {
                 IncomeBracket incomeBracket = incomeBracketsByAge.get(i);
                 Integer incomeMax = incomeBracket.getMax();
-                Integer numsFamiliesInAgeGroup = incomeBracket.getAgeGroups().get(j);
+                Integer numsFamiliesInAgeGroup = incomeBracket.getNumOfFamiliesInAgeGroups().get(j);
                 if (incomeMax < 100_000) {
                     numUnder100_000 += numsFamiliesInAgeGroup;
                 }
@@ -35,9 +38,22 @@ public class IncomeDataInput {
                             numUnder100_000 + " families making under $100,000, " + 
                             numOver100_1000 + " families making over $100,000.");
         }
+        // Q3: If we broke up the income brackets into $50,000 brackets, how many families are in each braket?
+        for (String bracket : rangesToIncomeBrackets.keySet()) {
+            List<IncomeBracket> brackets = rangesToIncomeBrackets.get(bracket);
+            int numOfFamilies = 0;
+            for (IncomeBracket b : brackets) {
+                numOfFamilies += b.getTotalNumOfFamilies();
+            }
+            System.out.println(bracket + ", number of families = " + numOfFamilies);
+        }
     }
 
-    public static void readIncomeData(File file, List<IncomeBracket> incomeBracketsByAge) {
+    public static void readIncomeData(
+                                    File file, 
+                                    List<IncomeBracket> incomeBracketsByAge,
+                                    Map<String, List<IncomeBracket>> rangesToIncomeBrackets) 
+    {
         try (Scanner fileScan = new Scanner(new FileReader(file))) {
             // skip the first 13 lines
             skipLines(fileScan, 13);
@@ -91,9 +107,64 @@ public class IncomeDataInput {
                     .min(min)
                     .max(max)
                     .range(range)
-                    .ageGroups(numByAgeGroup)
+                    .numOfFamiliesInAgeGroups(numByAgeGroup)
                     .build();
                 incomeBracketsByAge.add(bracket);
+                if (max < 50_000) {
+                    if (rangesToIncomeBrackets.containsKey("under $50,000")) {
+                        List<IncomeBracket> brackets = rangesToIncomeBrackets.get("under $50,000");
+                        brackets.add(bracket);
+                    }
+                    else {
+                        List<IncomeBracket> brackets = new ArrayList<IncomeBracket>();
+                        brackets.add(bracket);
+                        rangesToIncomeBrackets.put("under $50,000", brackets);
+                    }
+                }
+                else if (max < 100_000) {
+                    if (rangesToIncomeBrackets.containsKey("$50,000 - $99,999")) {
+                        List<IncomeBracket> brackets = rangesToIncomeBrackets.get("$50,000 - $99,999");
+                        brackets.add(bracket);
+                    }
+                    else {
+                        List<IncomeBracket> brackets = new ArrayList<IncomeBracket>();
+                        brackets.add(bracket);
+                        rangesToIncomeBrackets.put("$50,000 - $99,999", brackets);
+                    }
+                }
+                else if (max < 150_000) {
+                    if (rangesToIncomeBrackets.containsKey("$100,000 - $149,999")) {
+                        List<IncomeBracket> brackets = rangesToIncomeBrackets.get("$100,000 - $149,999");
+                        brackets.add(bracket);
+                    }
+                    else {
+                        List<IncomeBracket> brackets = new ArrayList<IncomeBracket>();
+                        brackets.add(bracket);
+                        rangesToIncomeBrackets.put("$100,000 - $149,999", brackets);
+                    }
+                }
+                else if (max < 200_000) {
+                    if (rangesToIncomeBrackets.containsKey("$150,000 - $199,999")) {
+                        List<IncomeBracket> brackets = rangesToIncomeBrackets.get("$150,000 - $199,999");
+                        brackets.add(bracket);
+                    }
+                    else {
+                        List<IncomeBracket> brackets = new ArrayList<IncomeBracket>();
+                        brackets.add(bracket);
+                        rangesToIncomeBrackets.put("$150,000 - $199,999", brackets);
+                    }
+                }
+                else {
+                    if (rangesToIncomeBrackets.containsKey("$200,000 and over")) {
+                        List<IncomeBracket> brackets = rangesToIncomeBrackets.get("$200,000 and over");
+                        brackets.add(bracket);
+                    }
+                    else {
+                        List<IncomeBracket> brackets = new ArrayList<IncomeBracket>();
+                        brackets.add(bracket);
+                        rangesToIncomeBrackets.put("$200,000 and over", brackets);
+                    }
+                }
             }
         }
         catch (IOException ex) {
