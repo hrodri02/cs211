@@ -43,7 +43,7 @@ public class IncomeBracketDriver {
                             numOver100_1000 + " families making over $100,000.");
         }
         System.out.println();
-        // QUESTION 3: If we broke up the income brackets into $50,000 brackets, how many families are in each braket?
+        // QUESTION 3: If we broke up the income brackets into $50,000 brackets, how many families are in each bracket?
         System.out.println("Number of familiies in income brackets of $50,000.");
         for (String bracket : rangesToIncomeBrackets.keySet()) {
             List<IncomeBracket> brackets = rangesToIncomeBrackets.get(bracket);
