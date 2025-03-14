@@ -58,7 +58,7 @@ public class IncomeBracket {
     @Override
 	public String toString() {
         int total = getTotalNumOfFamilies();
-		return "range =" + range + "\tnumber of families =" + total + "\n";
+		return "range =" + range + "\tnumber of families =" + total;
 	}
 
     @Override
