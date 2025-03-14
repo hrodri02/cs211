@@ -1,8 +1,6 @@
-import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
-public class IncomeBracket {
+public class IncomeBracket implements Comparable<IncomeBracket> {
     private Integer min;
     private Integer max;
     private String range;
@@ -70,21 +68,19 @@ public class IncomeBracket {
             this.numOfFamiliesInAgeGroups.equals(incomeBracket.getNumOfFamiliesInAgeGroups());
     }
 
-    public static class AgeGroupsComparator implements Comparator<IncomeBracket> {
-        @Override
-        public int compare(IncomeBracket bracket1, IncomeBracket bracket2) {
-            Integer numFamiliesInFirstBracket = 0;
-            for (Integer numOfFamiliesInAgeGroup : bracket1.numOfFamiliesInAgeGroups) {
-                numFamiliesInFirstBracket += numOfFamiliesInAgeGroup;
-            }
-
-            Integer numFamiliesInSecondBracket = 0;
-            for (Integer numOfFamiliesInAgeGroup : bracket2.numOfFamiliesInAgeGroups) {
-                numFamiliesInSecondBracket += numOfFamiliesInAgeGroup;
-            }
-
-            return Integer.compare(numFamiliesInSecondBracket, numFamiliesInFirstBracket);
+    @Override
+    public int compareTo(IncomeBracket otherBracket) {
+        Integer numFamiliesInFirstBracket = 0;
+        for (Integer numOfFamiliesInAgeGroup : this.numOfFamiliesInAgeGroups) {
+            numFamiliesInFirstBracket += numOfFamiliesInAgeGroup;
         }
+
+        Integer numFamiliesInSecondBracket = 0;
+        for (Integer numOfFamiliesInAgeGroup : otherBracket.numOfFamiliesInAgeGroups) {
+            numFamiliesInSecondBracket += numOfFamiliesInAgeGroup;
+        }
+
+        return Integer.compare(numFamiliesInSecondBracket, numFamiliesInFirstBracket);
     }
 
     public static class Builder {

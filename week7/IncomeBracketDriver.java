@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class IncomeDataInput {
+public class IncomeBracketDriver {
     public static void main(String[] args) {
         File file = new File("finc02_1_1_clean.csv");
         List<IncomeBracket> incomeBracketsByAge = new ArrayList<>();
         Map<String, List<IncomeBracket>> rangesToIncomeBrackets = new HashMap<>();
         readIncomeData(file, incomeBracketsByAge, rangesToIncomeBrackets);
-        Collections.sort(incomeBracketsByAge, new IncomeBracket.AgeGroupsComparator());
+        Collections.sort(incomeBracketsByAge);
         // Q1: What are the income brackets sorted by the number of families in each bracket?
         System.out.println("Top five income brackets with the most families.");
         for (int i = 0; i < 5; i++) 
