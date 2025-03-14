@@ -2,43 +2,27 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class IncomeDataInput {
     public static void main(String[] args) {
         File file = new File("finc02_1_1.csv");
-        List<List<Integer>> incomeBracketsByAge = new ArrayList<>();
+        List<IncomeBracket> incomeBracketsByAge = new ArrayList<>();
         readIncomeData(file, incomeBracketsByAge);
-        int maxNumOfFamilies = 0;
-        int indexOfMaxNumOfFamilies = 0;
-        for (int i = 0; i < incomeBracketsByAge.size(); i++) {
-            String incomeBracket = i*5000 + " - " + (i*5000 + 5000 - 1);
-            int numFamilies = 0;
-            List<Integer> numsByAgeGroup = incomeBracketsByAge.get(i);
-            for (Integer numInAgeGroup : numsByAgeGroup) {
-                numFamilies += numInAgeGroup;
-            }
-            if (numFamilies > maxNumOfFamilies) {
-                maxNumOfFamilies = numFamilies;
-                indexOfMaxNumOfFamilies = i;
-            }
-            // System.out.println(incomeBracket + ", num of families = " + numFamilies);
-            // System.out.println(incomeBracket + ": " + numsByAgeGroup);
-        }
-        String incomeBracket = Integer.toString(indexOfMaxNumOfFamilies*5000);
-        incomeBracket += (indexOfMaxNumOfFamilies == incomeBracketsByAge.size() - 1)? " and over" :
-                            " - " + (indexOfMaxNumOfFamilies*5000 + 5000 - 1);
-        System.out.println(incomeBracket + ", num of families = " + maxNumOfFamilies);
+        Collections.sort(incomeBracketsByAge, new IncomeBracket.AgeGroupsComparator());
+        // Q1: What are the income brackets sorted by the number of families in each bracket?
+        System.out.println(incomeBracketsByAge);
+        // Q2: For each age group, how many families are making under and over $100,000/yr?
         for (int j = 0; j < 7; j++) {
             int numUnder100_000 = 0;
             int numOver100_1000 = 0;
 
             for (int i = 0; i < incomeBracketsByAge.size(); i++) {
-                List<Integer> incomBracket = incomeBracketsByAge.get(i);
-                
-                Integer incomeMax = i*5000 + 5000 - 1;
-                Integer numsFamiliesInAgeGroup = incomBracket.get(j);
+                IncomeBracket incomeBracket = incomeBracketsByAge.get(i);
+                Integer incomeMax = incomeBracket.getMax();
+                Integer numsFamiliesInAgeGroup = incomeBracket.getAgeGroups().get(j);
                 if (incomeMax < 100_000) {
                     numUnder100_000 += numsFamiliesInAgeGroup;
                 }
@@ -51,10 +35,9 @@ public class IncomeDataInput {
                             numUnder100_000 + " families making under $100,000, " + 
                             numOver100_1000 + " families making over $100,000.");
         }
-        
     }
 
-    public static void readIncomeData(File file, List<List<Integer>> incomeBracketsByAge) {
+    public static void readIncomeData(File file, List<IncomeBracket> incomeBracketsByAge) {
         try (Scanner fileScan = new Scanner(new FileReader(file))) {
             // skip the first 13 lines
             skipLines(fileScan, 13);
@@ -100,7 +83,17 @@ public class IncomeDataInput {
                 int num75AndOver = Integer.parseInt(token);
                 numByAgeGroup.add(num75AndOver);
 
-                incomeBracketsByAge.add(numByAgeGroup);
+                int min = i*5000;
+                int max = min + 5000 - 1;
+                String range = "$" + min;
+                range += (i == 40)? " and over" : " - $" + (max);
+                IncomeBracket bracket = new IncomeBracket.Builder()
+                    .min(min)
+                    .max(max)
+                    .range(range)
+                    .ageGroups(numByAgeGroup)
+                    .build();
+                incomeBracketsByAge.add(bracket);
             }
         }
         catch (IOException ex) {
