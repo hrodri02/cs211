@@ -16,8 +16,12 @@ public class IncomeDataInput {
         readIncomeData(file, incomeBracketsByAge, rangesToIncomeBrackets);
         Collections.sort(incomeBracketsByAge, new IncomeBracket.AgeGroupsComparator());
         // Q1: What are the income brackets sorted by the number of families in each bracket?
-        System.out.println(incomeBracketsByAge);
+        System.out.println("Top five income brackets with the most families.");
+        for (int i = 0; i < 5; i++) 
+            System.out.println(incomeBracketsByAge.get(i));
+        System.out.println();
         // Q2: For each age group, how many families are making under and over $100,000/yr?
+        System.out.println("Number of families making under and over $100,000/yr by age group.");
         for (int j = 0; j < 7; j++) {
             int numUnder100_000 = 0;
             int numOver100_1000 = 0;
@@ -38,7 +42,9 @@ public class IncomeDataInput {
                             numUnder100_000 + " families making under $100,000, " + 
                             numOver100_1000 + " families making over $100,000.");
         }
+        System.out.println();
         // Q3: If we broke up the income brackets into $50,000 brackets, how many families are in each braket?
+        System.out.println("Number of familiies in income brackets of $50,000.");
         for (String bracket : rangesToIncomeBrackets.keySet()) {
             List<IncomeBracket> brackets = rangesToIncomeBrackets.get(bracket);
             int numOfFamilies = 0;
