@@ -1,0 +1,74 @@
+public void methodA() {
+   statement1
+   try {
+      methodB();
+      statement2
+   } catch(ExceptionB ex) {
+      statement3
+   } catch(ExceptionC ex) {
+      statement4
+   } finally {
+      statement5
+   }
+   statement6
+}
+
+public void methodB() {
+   statement7
+   try {
+      statement8 // this statement generates the exception when one is thrown
+      statement9
+   } catch(ExceptionA ex) {
+      statement10
+   } catch(ExceptionB ex) {
+      statement11
+   } finally {
+      statement12
+   }
+   statement13
+}
+
+1. no exceptions are thrown
+statement1
+    statement7
+    statement8
+    statement9
+    statement12
+    statement13
+statement2
+statement5
+statement6
+2. an ExceptionA is thrown in statement8
+statement1
+    statement7
+    statement8
+    statement10
+    statement12
+    statement13
+statement2
+statement5
+statement6
+3. an ExceptionB is thrown in statement8
+statement1
+    statement7
+    statement8
+    statement11
+    statement12
+    statement13
+statement2
+statement5
+statement6
+4. an ExceptionC is thrown in statement8
+statement1
+    statement7
+    statement8
+    statement12
+statement4
+statement5
+statement6
+5. an ExceptionD is thrown in statement8
+statement1
+    statement7
+    statement8
+    statement12
+statement5
