@@ -8,7 +8,7 @@ public class Driver {
         Student s1 = new Student("Brayan", Major.ENGLISH, false);
         Student s2 = new Student("Jana", Major.ENGLISH, false);
         Student s3 = new Student("Heri", Major.COMPUTER_SCIENCE, false);
-        Student s4 = new Student("Beatriz", Major.COMPUTER_SCIENCE, false);
+        Student s4 = new Student("Susie", Major.COMPUTER_SCIENCE, false);
         List<Student> students = List.of(s1, s2, s3, s4);
 
         Map<Major, List<Student>> majorToList = groupByMajor(students);
