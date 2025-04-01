@@ -1,4 +1,6 @@
-public class Pair<T extends Comparable<T>> {
+// T must be a type that can be compared with objects of type T or 
+// any of its supertypes (including T itself).
+public class Pair<T extends Comparable<? super T>> {
     private T first;
     private T second;
 
