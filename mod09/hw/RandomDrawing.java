@@ -33,6 +33,8 @@ public class RandomDrawing<T> implements RandomDrawingInterface<T>
 
     public T selectWinner(boolean removeWinner) {
         int max = entrants.size() - 1;
+        if (max < 0 ) return null;
+        
         int min = 0;
         int index = random.nextInt(max - min + 1) + min;
         return (removeWinner) ? entrants.remove(index) : entrants.get(index);
