@@ -15,6 +15,7 @@ public class RandomDrawing<T> implements RandomDrawingInterface<T>
         this.allowsDuplicates = allowsDuplicates;
         this.entrants = new ArrayList<>();
         this.seen = new HashSet<>();
+        this.random = new Random();
     }
 
     public boolean addEntry(T entry) {
