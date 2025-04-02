@@ -11,7 +11,29 @@ public class PartTwoGenericMethodDriver {
 	// YOUR GENERIC METHOD GOES HERE!
 	// NOTE: the rest of this class will not compile until you write your 
 	// generic method header (with at least an empty method body).
+	public static <T> List<T> selectUniqueWinners(RandomDrawingInterface<T> drawingInterface, int numWinners) {
+		List<T> winners = new ArrayList<>();
+		List<T> dups = new ArrayList<>();
+		Set<T> seen = new HashSet<>();
+		while (drawingInterface.size() > 0) {
+			T entry = drawingInterface.selectWinner(REMOVE_WINNER);
+			if (!seen.contains(entry)) {
+				winners.add(entry);
+				seen.add(entry);
+				if (winners.size() == numWinners) {
+					break;
+				}
+			} else {
+				dups.add(entry);
+			}
+		}
 
+		for (T dup : dups) {
+			drawingInterface.addEntry(dup);
+		}
+
+		return winners;
+	}
 
 	public static void main(String[] args) {
 		int numWinners = 0;
