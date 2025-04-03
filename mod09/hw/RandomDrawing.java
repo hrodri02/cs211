@@ -1,47 +1,64 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class RandomDrawing<T> implements RandomDrawingInterface<T> 
 {
     private boolean allowsDuplicates;
-    private List<T> entrants;
-    private Set<T> seen;
+    private Map<T, Integer> entries;
+    private Integer numEntries;
     private Random random;
 
     public RandomDrawing(boolean allowsDuplicates) {
         this.allowsDuplicates = allowsDuplicates;
-        this.entrants = new ArrayList<>();
-        this.seen = new HashSet<>();
+        this.entries = new HashMap<>();
+        this.numEntries = 0;
         this.random = new Random();
     }
 
     public boolean addEntry(T entry) {
         if (allowsDuplicates) {
-            entrants.add(entry);
+            if (!entries.containsKey(entry)) {
+                entries.put(entry, 0);
+            }
+            int newFreq = entries.get(entry) + 1;
+            entries.put(entry, newFreq);
+
+            numEntries += 1;
             return true;
         }
-        else if (!seen.contains(entry)) {
-            entrants.add(entry);
-            seen.add(entry);
+        else if (!entries.containsKey(entry)) {
+            entries.put(entry, 1);
+            numEntries += 1;
             return true;
         }
+
         return false;
     }
 
     public T selectWinner(boolean removeWinner) {
-        int max = entrants.size() - 1;
+        Set<T> keys = entries.keySet();
+        List<T>  listOfKeys = new ArrayList<>(keys);
+        int max = listOfKeys.size() - 1;
         if (max < 0 ) return null;
-        
+
         int min = 0;
         int index = random.nextInt(max - min + 1) + min;
-        return (removeWinner) ? entrants.remove(index) : entrants.get(index);
+        T entry = listOfKeys.get(index);
+        if (removeWinner) {
+            int newFreq = entries.get(entry) - 1;
+            if (newFreq == 0)
+                entries.remove(entry);
+            else 
+                entries.put(entry, newFreq);
+            
+            numEntries -= 1;
+            return entry;
+        }
+
+        return entry;
     }
 
     public int size() {
-        return entrants.size();
+        return numEntries;
     }
 
     public boolean allowsDuplicates() {
@@ -50,7 +67,7 @@ public class RandomDrawing<T> implements RandomDrawingInterface<T>
 
     public void displayEntries() {
         System.out.println("Entrants:");
-        for (T entry : entrants) {
+        for (T entry : entries.keySet()) {
             System.out.println("\t" + entry);
         }
     }
