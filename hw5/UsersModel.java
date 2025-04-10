@@ -28,6 +28,13 @@ public class UsersModel {
     }
 
     public void sortUsersByNameThenEmail() {
-        Collections.sort(people, comparator);
+        Collections.sort(people,
+            (p1, p2) -> {
+                if (p1.getName().equalsIgnoreCase(p2.getName())) {
+                    return p1.getEmail().compareTo(p2.getEmail());
+                }
+                return p1.getName().compareTo(p2.getName());
+            }
+        );
     }
 }
