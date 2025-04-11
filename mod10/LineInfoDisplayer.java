@@ -5,7 +5,7 @@ public interface LineInfoDisplayer {
     String getInfo(Line line);
 
     public static enum InfoType {
-        DISTANCE, MIDPOINT, VERT_HORZ;
+        DISTANCE, MIDPOINT, VERT_HORZ, SLOPE;
     }
       
     public static LineInfoDisplayer createLineInfoDisplayer(InfoType type) {
@@ -36,6 +36,13 @@ public interface LineInfoDisplayer {
                         typeOfLine += "neither vertical nor horizontal.";
                     }
                     return typeOfLine;
+                };
+            case InfoType.SLOPE:
+                return (Line line) -> {
+                    double changeX = line.getEndX() - line.getStartX();
+                    double changeY = line.getEndY() - line.getStartY();
+                    double slope = -changeY / changeX;
+                    return "Slope =" + slope;
                 };
         }
         return null;

@@ -17,8 +17,8 @@ public class LineInfoGUI extends Application {
     private BorderPane borderPane;
     private Circle startPoint, endPoint;
     private Line line;
-    private Button distanceButton, midpointButton, vertHorzButton;
-    private Text distanceText, midpointText, vertHorzText, timeText; // USE THESE!
+    private Button distanceButton, midpointButton, vertHorzButton, slopeButton;
+    private Text distanceText, midpointText, vertHorzText, timeText, slopeText; // USE THESE!
     private LineInfoDisplayer lineInfoDisplayer; // USE THIS!
 
     private static final int CIRCLE_RADIUS = 5;
@@ -62,6 +62,16 @@ public class LineInfoGUI extends Application {
         
         timeText = new Text("");
         // SOMEWHERE IN THE CODE YOU WILL UPDATE THE TEXT OF THIS!
+
+        slopeText = new Text("");
+        slopeButton = new Button("Calculate Slope");
+        slopeButton.setOnAction(
+            (event) -> {
+                lineInfoDisplayer = LineInfoDisplayer.createLineInfoDisplayer(LineInfoDisplayer.InfoType.SLOPE);
+                String slope = lineInfoDisplayer.getInfo(line);
+                slopeText.setText(slope);
+            }
+        );
         
      
         TilePane distancePane = new TilePane(distanceButton, distanceText);
@@ -70,10 +80,12 @@ public class LineInfoGUI extends Application {
         midpointPane.setAlignment(Pos.CENTER);
         TilePane vertHorzPane = new TilePane(vertHorzButton, vertHorzText);
         vertHorzPane.setAlignment(Pos.CENTER);
+        TilePane slopePane = new TilePane(slopeButton, slopeText);
+        slopePane.setAlignment(Pos.CENTER);
         TilePane timePane = new TilePane(timeText);
         timePane.setAlignment(Pos.CENTER);
 
-        VBox controlBox = new VBox(distancePane,midpointPane,vertHorzPane,timePane);
+        VBox controlBox = new VBox(distancePane,midpointPane,vertHorzPane,slopePane,timePane);
         controlBox.setAlignment(Pos.CENTER);
         controlBox.setSpacing(15);
 
