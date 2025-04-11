@@ -15,13 +15,13 @@ public interface LineInfoDisplayer {
                     double changeX = line.getEndX() - line.getStartX();
                     double changeY = line.getEndY() - line.getStartY();
                     double dist = Math.sqrt(changeX*changeX + changeY*changeY);
-                    return "Distance = " + dist;
+                    return String.format("Distance = %.2f", dist);
                 };
             case InfoType.MIDPOINT:
                 return (Line line) -> {
                     double midX = (line.getEndX() + line.getStartX()) / 2;
                     double midY = (line.getEndY() + line.getStartY()) / 2;
-                    return "Midpoint = (" + midX + ", " + midY + ")";
+                    return String.format("Midpoint = (%.2f, %.2f)", midX, midY);
                 };
             case InfoType.VERT_HORZ:
                 return (Line line) -> {
@@ -41,8 +41,8 @@ public interface LineInfoDisplayer {
                 return (Line line) -> {
                     double changeX = line.getEndX() - line.getStartX();
                     double changeY = line.getEndY() - line.getStartY();
-                    double slope = -changeY / changeX;
-                    return "Slope =" + slope;
+                    double slope = changeY / changeX;
+                    return String.format("Slope = %.2f", slope);
                 };
         }
         return null;
