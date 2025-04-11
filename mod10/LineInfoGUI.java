@@ -32,23 +32,33 @@ public class LineInfoGUI extends Application {
 
         distanceText = new Text("");
         distanceButton = new Button("Calculate Distance");
-        // YOUR CODE HERE- ADD A STATEMENT TO SET THE ACTION OF THE BUTTON.   
-        // USE A LAMBDA TO ASSIGN A VALUE TO lineInfoDisplayer AND
-        // USE OBJECT TO GET THE STRING DESCRIBING THE DISTANCE.
-        // UPDATE THE TEXT OBJECT TO DISPLAY THAT INFO.
-       
+        distanceButton.setOnAction(
+            (event) -> {
+                lineInfoDisplayer = LineInfoDisplayer.createLineInfoDisplayer(LineInfoDisplayer.InfoType.DISTANCE);
+                String distance = lineInfoDisplayer.getInfo(line);
+                distanceText.setText(distance);
+            }
+        );
 
         midpointText = new Text("");
         midpointButton = new Button("Calculate Midpoint");
-        // YOUR CODE HERE- ADD A STATEMENT TO SET THE ACTION OF THE BUTTON.     
-        // SAME AS ABOVE BUT FOR MIDPOINT!
-        
+        midpointButton.setOnAction(
+            (event) -> {
+                lineInfoDisplayer = LineInfoDisplayer.createLineInfoDisplayer(LineInfoDisplayer.InfoType.MIDPOINT);
+                String midpoint = lineInfoDisplayer.getInfo(line);
+                midpointText.setText(midpoint);
+            }
+        );
         
         vertHorzText = new Text("");
         vertHorzButton = new Button("Determine Vertical/Horizontal");
-        // YOUR CODE HERE- ADD A STATEMENT TO SET THE ACTION OF THE BUTTON.
-        // SAME AS ABOVE BUT FOR VERTICAL/HORIZONTAL!
-
+        vertHorzButton.setOnAction(
+            (event) -> {
+                lineInfoDisplayer = LineInfoDisplayer.createLineInfoDisplayer(LineInfoDisplayer.InfoType.VERT_HORZ);
+                String typeOfLine = lineInfoDisplayer.getInfo(line);
+                vertHorzText.setText(typeOfLine);
+            }
+        );
         
         timeText = new Text("");
         // SOMEWHERE IN THE CODE YOU WILL UPDATE THE TEXT OF THIS!
