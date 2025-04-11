@@ -102,7 +102,7 @@ public class LineInfoGUI extends Application {
             
             line = new Line(startPoint.getCenterX(), startPoint.getCenterY(), endPoint.getCenterX(), endPoint.getCenterY());
             pane.getChildren().add(line);
-                        
+            setTimeText();
         } else { // startPoint != null && endPoint !=null
         	// both start and end are there, so this is starting a new line; 
         	// set a new start point
@@ -125,6 +125,12 @@ public class LineInfoGUI extends Application {
         pane.getChildren().add(coordinates);
     }
   
+    private void setTimeText() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss a");
+        String formattedDate = now.format(formatter);
+        timeText.setText("Updated " + formattedDate);
+    }
 
     public static void main(String[] args) {
         launch(args);
