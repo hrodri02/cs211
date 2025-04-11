@@ -9,7 +9,35 @@ public interface LineInfoDisplayer {
     }
       
     public static LineInfoDisplayer createLineInfoDisplayer(InfoType type) {
-    	 //  YOUR CODE HERE!
+    	switch (type) {
+            case InfoType.DISTANCE:
+                return (Line line) -> {
+                    double changeX = line.getEndX() - line.getStartX();
+                    double changeY = line.getEndY() - line.getStartY();
+                    double dist = Math.sqrt(changeX*changeX + changeY*changeY);
+                    return "Distance = " + dist;
+                };
+            case InfoType.MIDPOINT:
+                return (Line line) -> {
+                    double midX = (line.getEndX() + line.getStartX()) / 2;
+                    double midY = (line.getEndY() + line.getStartY()) / 2;
+                    return "Midpoint = (" + midX + ", " + midY + ")";
+                };
+            case InfoType.VERT_HORZ:
+                return (Line line) -> {
+                    String typeOfLine = "Type of line: ";
+                    if (line.getStartX() == line.getEndX()) {
+                        typeOfLine += "vertical.";
+                    }
+                    else if (line.getStartY() == line.getEndY()) {
+                        typeOfLine += "horizonal.";
+                    }
+                    else {
+                        typeOfLine += "neither vertical nor horizontal.";
+                    }
+                    return typeOfLine;
+                };
+        }
         return null;
     }
 
