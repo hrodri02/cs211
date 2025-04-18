@@ -14,7 +14,15 @@ public class PracticeM11Tester {
 		for(int i=0; i<5; i++) {
 			System.out.println(clientList.get(i));
 		}
-		
+		// Q4: Which client spent the most money? 
+		Client client = clientList.stream().max(
+			(client1, client2) -> {
+				double total1 = client1.getOrders().stream().mapToDouble(Order::getTotal).sum();
+				double total2 = client2.getOrders().stream().mapToDouble(Order::getTotal).sum();
+				return Double.compare(total1, total2);
+			}
+		).get();
+		System.out.println(client);
 	}
 
 	private static void fillList(List<Client> clientList) {
