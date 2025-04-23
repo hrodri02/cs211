@@ -131,7 +131,20 @@ public class ProductBigDataQuestions {
         // QUESTION 7: Which chemical appears in the most products?
         // Hint: use max(Comparator) again. Define your comparator 
     	// to compare chemical names based on the size of the list of products.
-    	 return ""; // placeholder so the code will compile; replace with your own code
+        chemicalProductMap = new HashMap<String, List<Product>>();
+        productList.stream().forEach(
+               product -> { 
+                   product.getChemicals().stream().
+                       forEach(chemicalName -> 
+                           chemicalProductMap.putIfAbsent(chemicalName,  new ArrayList<Product>()));
+               }      
+            );
+        q6(chemicalProductMap);
+
+        return chemicalProductMap.entrySet().stream()
+                .max((entry1, entry2) -> Integer.compare(entry1.getValue().size(), entry2.getValue().size()))
+                .get()
+                .getKey();
     }
     
     public static List<Product> createList() {
