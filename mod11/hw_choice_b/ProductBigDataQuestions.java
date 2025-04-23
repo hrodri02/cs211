@@ -98,7 +98,9 @@ public class ProductBigDataQuestions {
     }
     public static long q3() {
         // QUESTION 3: How many products have 4 or more chemicals?
-    	 return 0L; // placeholder so the code will compile; replace with your own code
+        return productList.stream()
+                .filter(product -> product.getNumberOfChemicals() >= 4)
+                .count();
     }
     public static Map<String, List<Product>> q4() {
         // QUESTION 4: Create a Map with key = company name and 
