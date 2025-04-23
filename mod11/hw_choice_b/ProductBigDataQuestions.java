@@ -85,7 +85,9 @@ public class ProductBigDataQuestions {
         // Example: Product1 contains Chemical1, Chemical2 and 
     	//          Product2 contains Chemical2 and Chemical3.
         //          The count would be 4 total chemicals.
-        return 0; // placeholder so the code will compile; replace with your own code
+        return productList.stream()
+                .mapToInt(Product::getNumberOfChemicals)
+                .sum();
     }
     public static int q2() {
         // QUESTION 2: How many different companies are in the dataset?
