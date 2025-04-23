@@ -111,7 +111,10 @@ public class ProductBigDataQuestions {
     	// QUESTION 5: Use the map you created above. Which company has the most products?
         // Hint: Use .max(Comparator) and define the Comparator to compare companies 
     	// based on size of their lists.
-    	 return ""; // placeholder so the code will compile; replace with your own code
+        return companyProductMap.entrySet().stream()
+                .max((entry1, entry2) -> Integer.compare(entry1.getValue().size(), entry2.getValue().size()))
+                .get()
+                .getKey();
     }
     public static void q6( Map<String, List<Product>> chemicalProductMap) {
     	// QUESTION 6: Fill the lists (the value) of the map above.
