@@ -105,8 +105,7 @@ public class ProductBigDataQuestions {
     public static Map<String, List<Product>> q4() {
         // QUESTION 4: Create a Map with key = company name and 
     	// value = list of products for that company.
-        // Hint: use Collectors.groupingBy!
-    	 return new HashMap<>(); // placeholder so the code will compile; replace with your own code
+        return productList.stream().collect(Collectors.groupingBy(Product::getCompany));
     }
     public static String q5(Map<String, List<Product>> companyProductMap) {
     	// QUESTION 5: Use the map you created above. Which company has the most products?
