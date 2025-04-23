@@ -120,7 +120,12 @@ public class ProductBigDataQuestions {
     	// QUESTION 6: Fill the lists (the value) of the map above.
         // Hint: Use a nested stream (one stream of productList 
     	// and then a separate stream for each list of each product).
-      
+        chemicalProductMap.keySet().forEach((chemical) -> {
+            List<Product> products = productList.stream()
+                                        .filter(product -> product.getChemicals().contains(chemical))
+                                        .toList();
+            chemicalProductMap.put(chemical, products);
+        });
     }
     public static String q7() {
         // QUESTION 7: Which chemical appears in the most products?
