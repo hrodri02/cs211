@@ -91,7 +91,10 @@ public class ProductBigDataQuestions {
     }
     public static int q2() {
         // QUESTION 2: How many different companies are in the dataset?
-    	 return 0; // placeholder so the code will compile; replace with your own code
+        return (int) productList.stream()
+                        .map(Product::getCompany)
+                        .distinct()
+                        .count();
     }
     public static long q3() {
         // QUESTION 3: How many products have 4 or more chemicals?
