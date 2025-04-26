@@ -8,31 +8,36 @@ public class RandomDrawingDriver {
 		
 		System.out.println("\n**************************TESTING STRING DRAWING: LETTERS AND SPACES ONLY**************************");
 		RandomDrawingInterface<String> stringDrawingLettersSpacesOnly = 
-				null; // YOUR CODE HERE TO INVOKE THE RandomDrawingLimited CONSTRUCTOR
+				new RandomDrawingLimited<>(ALLOW_DUPLICATES, RandomDrawingDriver::containsOnlyLettersSpaces); // YOUR CODE HERE TO INVOKE THE RandomDrawingLimited CONSTRUCTOR
 		fillRandomStringBox(stringDrawingLettersSpacesOnly);
 		System.out.print("Eligible entries added: ");
 		stringDrawingLettersSpacesOnly.displayEntries();
 
+		
 		System.out.println("\n**************************TESTING INTEGER DRAWING: EVEN NUMBERS ONLY**************************");
 		RandomDrawingInterface<Integer> numberDrawingEvensOnly = 
-				null; // YOUR CODE HERE TO INVOKE THE RandomDrawingLimited CONSTRUCTOR
+			new RandomDrawingLimited<>(ALLOW_DUPLICATES, (num) -> num % 2 == 0);; // YOUR CODE HERE TO INVOKE THE RandomDrawingLimited CONSTRUCTOR
 		fillRandomIntegerBox(numberDrawingEvensOnly, 20);
 		System.out.print("Eligible entries added: ");
 		numberDrawingEvensOnly.displayEntries();
 		
 		System.out.println("\n**************************TESTING EMPLOYEE DRAWING: ELIGIBLE EMPLOYEES ONLY**************************");
 		RandomDrawingInterface<Employee> employeeDrawingEligibleOnly = 
-				null; // YOUR CODE HERE TO INVOKE THE RandomDrawingLimited CONSTRUCTOR
+				new RandomDrawingLimited<>(ALLOW_DUPLICATES, Employee::isEligible); // YOUR CODE HERE TO INVOKE THE RandomDrawingLimited CONSTRUCTOR
 		fillRandomEmployeeBox(employeeDrawingEligibleOnly, 10);
 		System.out.print("Eligible entries added: ");
 		employeeDrawingEligibleOnly.displayEntries();
-		
 	}
 	
 
 	// YOUR BOOLEAN METHOD HERE
 	public static boolean containsOnlyLettersSpaces(String word) {
-		return false; // placeholder: put your code here
+		for (Character c : word.toCharArray()) {
+			if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+				return false;
+			}
+		}
+		return true; 
 	}
 	
 	private static List<String> names() {
