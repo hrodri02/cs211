@@ -17,7 +17,6 @@ public class DiceRollerThread extends Thread {
             int num1 = 1 + random.nextInt(6);
             int num2 = 1 + random.nextInt(6);
             if (num1 == num2) doubles++;
-            System.out.println("(" + super.getName() + "): " + num1 + " " + num2);
         }
     }
 

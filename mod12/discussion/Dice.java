@@ -9,16 +9,16 @@ public class Dice {
         random = new Random();
     }
 
-    public void roll() {
+    public synchronized void roll() {
         num1 = 1 + random.nextInt(6);
         num2 = 1 + random.nextInt(6);
     }
 
-    public int getNum1() {
+    public synchronized int getNum1() {
         return num1;
     }
 
-    public int getNum2() {
+    public synchronized int getNum2() {
         return num2;
     }
 }

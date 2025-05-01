@@ -15,10 +15,7 @@ public class DiceRollerRunnable implements Runnable {
             dice.roll();
             int num1 = dice.getNum1();
             int num2 = dice.getNum2();
-            System.out.println(num1 + " " + num2);
-            if (num1 == num2) {
-                doubles++;
-            }
+            if (num1 == num2) doubles++;
         }
     }
 
