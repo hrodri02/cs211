@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class FoodTester {
-
+	private static final int NUM_SPOTS = 3;
 	public static void main(String[] args) {
 		int iDEThreadCount = Thread.activeCount();
 		 
@@ -15,11 +15,14 @@ public class FoodTester {
 		foodList.add(new Food("Bruchetta", 3, 1));
 		foodList.add(new Food("Bread", 1, 1));
 		foodList.add(new Food("Fried Green Tomatoes", 2, 1));
+
+		BlockingQueue<Food> spots = new ArrayBlockingQueue<>(NUM_SPOTS);
 		
 		// INITIALIZE AND START YOUR THREADS HERE!
-		Thread cooker = null;  
-		Thread server = null;
-		
+		Thread cooker = new Thread(new CookerThread(spots, foodList));  
+		Thread server = new Thread(new ServerThread(spots, foodList.size()));
+		cooker.start();
+		server.start();
 			
 		int programTimeCounter=0;
 		while(Thread.activeCount()>iDEThreadCount) {
@@ -35,8 +38,12 @@ public class FoodTester {
 		// USE STREAMS HERE ON THE INITIAL LIST! 
 		// NOTE: THIS PART HAS NOTHING TO DO WITH THE THREADS- JUST MORE STREAM PRACTICE! :)
 		// USE METHOD REFERENCES!
-		int totalCookTime = -1;
-		int totalServeTime = -1;
+		int totalCookTime = foodList.stream()
+								.mapToInt(Food::getCookTime)
+								.sum();
+		int totalServeTime = foodList.stream()
+								.mapToInt(Food::getServeTime)
+								.sum();
 		System.out.println("Total Cook Time = " + totalCookTime);
 		System.out.println("Total Serve Time = " + totalServeTime);	
 		System.out.println("Program Time = " + programTimeCounter);
