@@ -3,7 +3,7 @@ import java.lang.reflect.*;
 
 public class Address {
 	
-	@ProperLength(max=255)
+	@ProperLength
 	private String street;	
 	private String street2;
 	@ProperLength(max=40)
@@ -56,7 +56,7 @@ public class Address {
 						}
                         else if (len < min) {
                             throw new IllegalArgumentException("Length of " + field.getName() + 
-								" needs to be at least " + min + " characters long");
+								" needs to be at least " + min + " character(s) long");
                         }
 						else if (len > max) {
 							throw new IllegalArgumentException("Length of " + field.getName() + 
