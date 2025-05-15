@@ -1,3 +1,5 @@
+package generics;
+
 public class DigitalBook extends Book {
     private String format;
     public DigitalBook(String title, String author, int publishYear, int expectedSales, int actualSales, double cost,
