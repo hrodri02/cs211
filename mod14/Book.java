@@ -1,4 +1,4 @@
-package generics;
+
 
 public class Book
 {
@@ -23,10 +23,42 @@ public class Book
         this.bookType = bookType;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public int getActualSales() {
+        return actualSales;
+    }
+
+    public int getExpectedSales() {
+        return expectedSales;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getPublishYear() {
+        return publishYear;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public boolean isAvailableDigitally() {
+        return availableDigital;
+    }
+
+    public BookType getBookType() {
+        return bookType;
+    }
+
     @Override
     public String toString() {
-        return "title=" + title + ", author=" + author + ", publishYear=" + publishYear + ", expectedSales="
+        return "{title=" + title + ", author=" + author + ", publishYear=" + publishYear + ", expectedSales="
                 + expectedSales + ", actualSales=" + actualSales + ", cost=" + cost + ", availableDigital="
-                + availableDigital + ", bookType=" + bookType;
+                + availableDigital + ", bookType=" + bookType + "}";
     }
 }

@@ -1,4 +1,4 @@
-package generics;
+
 
 public class DigitalBook extends Book {
     private String format;
