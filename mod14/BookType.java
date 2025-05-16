@@ -1,6 +1,6 @@
-
-
 public enum BookType {
     FICTION,
-    NONFICTION
+    NONFICTION,
+    THRILLER,
+    FANTASY
 }

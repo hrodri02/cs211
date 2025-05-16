@@ -11,6 +11,28 @@ public class Book
     private boolean availableDigital;
     private BookType bookType;
 
+    public Book() {
+        title = "";
+        author = "";
+        publishYear = 0;
+        expectedSales = 0;
+        actualSales = 0;
+        cost = 0.0;
+        availableDigital = true;
+        bookType = BookType.FICTION;
+    }
+
+    public Book(Book other) {
+        this.title = other.title;
+        this.author = other.author;
+        this.publishYear = other.publishYear;
+        this.expectedSales = other.expectedSales;
+        this.actualSales = other.actualSales;
+        this.cost = other.cost;
+        this.availableDigital = other.availableDigital;
+        this.bookType = other.bookType; // Enum: safe to copy by reference
+    }
+
     public Book(String title, String author, int publishYear, int expectedSales, int actualSales, double cost,
             boolean availableDigital, BookType bookType) {
         this.title = title;
@@ -53,6 +75,14 @@ public class Book
 
     public BookType getBookType() {
         return bookType;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setBookType(BookType type) {
+        this.bookType = type;
     }
 
     @Override
